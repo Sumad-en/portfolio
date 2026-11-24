@@ -1,4 +1,5 @@
 ﻿
+
 using Microsoft.AspNetCore.Mvc;
 using portfolio.Data;
 using portfolio.ViewModels;
@@ -14,13 +15,22 @@ namespace portfolio.Controllers
             _portfolio = portfolio;
         }
 
+        // ==========================================
         // GET: /PortfolioView/Create
+        // DISPLAY CREATE FORM
+        // ==========================================
+
+        [HttpGet]
         public IActionResult Create()
         {
             return View(new PortfolioViewModel());
         }
 
+        // ==========================================
         // POST: /PortfolioView/Create
+        // SAVE COURSE, PROJECT, AND IMAGE
+        // ==========================================
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(PortfolioViewModel model)
@@ -37,7 +47,7 @@ namespace portfolio.Controllers
                 TempData["Success"] =
                     "Portfolio created successfully!";
 
-                return RedirectToAction(nameof(Create));
+                return RedirectToAction(nameof(Index));
             }
             catch (Exception)
             {
@@ -46,6 +56,19 @@ namespace portfolio.Controllers
 
                 return View(model);
             }
+        }
+
+        // ==========================================
+        // GET: /PortfolioView/Index
+        // DISPLAY ALL PORTFOLIO RECORDS
+        // ==========================================
+
+        [HttpGet]
+        public async Task<IActionResult> Index()
+        {
+            var portfolios = await _portfolio.GetAllPortfoliosAsync();
+
+            return View(portfolios);
         }
     }
 }

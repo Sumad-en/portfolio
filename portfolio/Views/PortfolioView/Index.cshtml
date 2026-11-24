@@ -1,0 +1,134 @@
+﻿@model IEnumerable<portfolio.ViewModels.PortfolioViewModel>
+
+@{
+    ViewData["Title"] = "Portfolio";
+}
+
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="page-title">
+            <i class="bi bi-briefcase-fill"></i> My Portfolio
+        </h2>
+
+        <a asp-controller="PortfolioView"
+           asp-action="Create"
+           class="btn btn-primary">
+            <i class="bi bi-plus-circle"></i> Create Portfolio
+        </a>
+    </div>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["Success"]
+        </div>
+    }
+
+    @if (Model.Any())
+    {
+        @foreach (var item in Model)
+        {
+            <div class="card bg-dark text-white mb-4 shadow">
+
+                <div class="card-header">
+                    <h4>
+                        <i class="bi bi-book"></i>
+                        @item.Course.CourseCode -
+                        @item.Course.CourseName
+                    </h4>
+                </div>
+
+                <div class="card-body">
+
+                    <!-- COURSE INFORMATION -->
+
+                    <h5 class="text-info">
+                        Course Information
+                    </h5>
+
+                    <p>
+                        <strong>Course Code:</strong>
+                        @item.Course.CourseCode
+                    </p>
+
+                    <p>
+                        <strong>Course Name:</strong>
+                        @item.Course.CourseName
+                    </p>
+
+                    <p>
+                        <strong>Description:</strong>
+                        @item.Course.Description
+                    </p>
+
+                    <hr />
+
+                    <!-- PROJECT INFORMATION -->
+
+                    <h5 class="text-info">
+                        <i class="bi bi-folder"></i>
+                        Project Information
+                    </h5>
+
+                    <p>
+                        <strong>Project Title:</strong>
+                        @item.Project.ProjectTitle
+                    </p>
+
+                    <p>
+                        <strong>Description:</strong>
+                        @item.Project.ProjectDescription
+                    </p>
+
+                    <p>
+                        <strong>Video Link:</strong>
+
+                        @if (!string.IsNullOrEmpty(item.Project.VideoLink))
+                        {
+                            <a href="@item.Project.VideoLink"
+                               target="_blank"
+                               class="btn btn-sm btn-info">
+                                View Video
+                            </a>
+                        }
+                        else
+                        {
+                            <span>No video available</span>
+                        }
+                    </p>
+
+                    <hr />
+
+                    <!-- PROJECT IMAGE INFORMATION -->
+
+                    <h5 class="text-info">
+                        <i class="bi bi-images"></i>
+                        Project Image
+                    </h5>
+
+                    @if (!string.IsNullOrEmpty(item.ProjectImage.ImageUrl))
+                    {
+                        <img src="@item.ProjectImage.ImageUrl"
+                             alt="@item.ProjectImage.ImageCaption"
+                             class="img-fluid rounded mb-3"
+                             style="max-width:300px; max-height:200px; object-fit:cover;" />
+                    }
+
+                    <p>
+                        <strong>Image Caption:</strong>
+                        @item.ProjectImage.ImageCaption
+                    </p>
+
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="alert alert-info">
+            No portfolio records found. Click Create Portfolio to add one.
+        </div>
+    }
+
+</div>

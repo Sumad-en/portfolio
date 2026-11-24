@@ -9,7 +9,7 @@ namespace portfolio.Controllers
     public class ProjectsController : Controller
     {
         private readonly string connectionString =
-            "Host=localhost;Port=5432;Database=portfolio_db;Username=postgres;Password=YOUR_PASSWORD";
+            "Host=aws-1-ap-southeast-2.pooler.supabase.com;Port=6543;Database=postgres;Username=postgres.jzbssvuqquqktmmklzrz;Password=prayerforlovingsorrow;SSL Mode=Require;Trust Server Certificate=true";
 
         public IActionResult Index()
         {
