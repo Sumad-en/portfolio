@@ -1,8 +1,330 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Lobotomy Corporation";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<style>
+    .lobotomy-home {
+        color: #e8e0c5;
+        font-family: Arial, sans-serif;
+        padding: 25px 10px;
+    }
+
+    .corp-header {
+        background: linear-gradient(135deg, #252319, #111111);
+        border: 2px solid #c6a832;
+        padding: 35px;
+        text-align: center;
+        position: relative;
+    }
+
+    .corp-logo {
+        font-size: 65px;
+        color: #e5c443;
+        margin-bottom: 10px;
+    }
+
+    .corp-title {
+        font-size: 38px;
+        font-weight: 900;
+        letter-spacing: 5px;
+        color: #e5c443;
+    }
+
+    .corp-subtitle {
+        color: #aaa17e;
+        letter-spacing: 4px;
+        font-size: 12px;
+    }
+
+    .corp-status {
+        background: #d3b43f;
+        color: #171717;
+        padding: 7px 15px;
+        font-weight: bold;
+        font-size: 12px;
+        display: inline-block;
+        margin-top: 20px;
+    }
+
+    .section-heading {
+        color: #e5c443;
+        border-bottom: 1px solid #9c842f;
+        padding-bottom: 12px;
+        margin: 35px 0 20px;
+        letter-spacing: 2px;
+        font-size: 20px;
+    }
+
+    .department-card {
+        background: linear-gradient(145deg, #24231d, #121212);
+        border: 1px solid #71602b;
+        padding: 25px;
+        height: 100%;
+        transition: 0.3s;
+    }
+
+        .department-card:hover {
+            border-color: #e5c443;
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(229,196,67,0.15);
+        }
+
+    .department-icon {
+        font-size: 38px;
+        color: #e5c443;
+        margin-bottom: 15px;
+    }
+
+    .department-card h4 {
+        color: #e5c443;
+        font-size: 17px;
+        letter-spacing: 2px;
+    }
+
+    .department-card p {
+        color: #aaa48d;
+        font-size: 14px;
+        min-height: 45px;
+    }
+
+    .corp-button {
+        display: inline-block;
+        background: #c6a832;
+        color: #171717;
+        padding: 10px 20px;
+        text-decoration: none;
+        font-weight: bold;
+        letter-spacing: 1px;
+        transition: 0.3s;
+    }
+
+        .corp-button:hover {
+            background: #f1d65b;
+            color: black;
+        }
+
+    .warning-panel {
+        background: rgba(112, 85, 18, 0.15);
+        border: 1px solid #a88a2f;
+        border-left: 5px solid #e5c443;
+        padding: 20px;
+        margin-top: 30px;
+    }
+
+        .warning-panel h5 {
+            color: #e5c443;
+            letter-spacing: 2px;
+        }
+
+        .warning-panel p {
+            color: #b9b19a;
+            margin-bottom: 0;
+        }
+
+    .corp-footer {
+        text-align: center;
+        color: #756d54;
+        font-size: 11px;
+        letter-spacing: 3px;
+        margin-top: 40px;
+    }
+
+    @@media (max-width: 768px) {
+        .corp-title {
+            font-size: 25px;
+        }
+
+        .corp-header {
+            padding: 25px 12px;
+        }
+    }
+</style>
+
+<div class="lobotomy-home">
+
+    <!-- CORPORATION HEADER -->
+
+    <div class="corp-header">
+
+        <div class="corp-logo">
+            <i class="bi bi-sun-fill"></i>
+        </div>
+
+        <h1 class="corp-title">
+            LOBOTOMY CORPORATION
+        </h1>
+
+        <p class="corp-subtitle">
+            FACE THE FEAR, BUILD THE FUTURE
+        </p>
+
+        <div class="corp-status">
+            <i class="bi bi-circle-fill"></i>
+            FACILITY SYSTEM ONLINE
+        </div>
+
+    </div>
+
+    <!-- MANAGER WELCOME -->
+
+    <h3 class="section-heading">
+        <i class="bi bi-person-badge"></i>
+        MANAGER'S TERMINAL
+    </h3>
+
+    <div class="warning-panel">
+
+        <h5>
+            <i class="bi bi-exclamation-triangle-fill"></i>
+            ATTENTION, MANAGER.
+        </h5>
+
+        <p>
+            Welcome to the facility management system.
+            All employee records, project documentation,
+            and archived materials are accessible through
+            the department terminals below.
+        </p>
+
+    </div>
+
+    <!-- DEPARTMENT TERMINALS -->
+
+    <h3 class="section-heading">
+        <i class="bi bi-grid-fill"></i>
+        DEPARTMENT DATABASES
+    </h3>
+
+    <div class="row g-4">
+
+        <!-- COURSES -->
+
+        <div class="col-md-4">
+
+            <div class="department-card">
+
+                <div class="department-icon">
+                    <i class="bi bi-book-fill"></i>
+                </div>
+
+                <h4>TRAINING DEPARTMENT</h4>
+
+                <p>
+                    Access course records, educational
+                    information, and training archives.
+                </p>
+
+                <a asp-controller="PortfolioView"
+                   asp-action="Index"
+                   class="corp-button">
+                    ACCESS DATABASE
+                </a>
+
+            </div>
+
+        </div>
+
+        <!-- PROJECTS -->
+
+        <div class="col-md-4">
+
+            <div class="department-card">
+
+                <div class="department-icon">
+                    <i class="bi bi-folder-fill"></i>
+                </div>
+
+                <h4>RESEARCH DEPARTMENT</h4>
+
+                <p>
+                    Review project records, descriptions,
+                    and research documentation.
+                </p>
+
+                <a asp-controller="PortfolioView"
+                   asp-action="Index"
+                   class="corp-button">
+                    ACCESS DATABASE
+                </a>
+
+            </div>
+
+        </div>
+
+        <!-- PROJECT IMAGES -->
+
+        <div class="col-md-4">
+
+            <div class="department-card">
+
+                <div class="department-icon">
+                    <i class="bi bi-images"></i>
+                </div>
+
+                <h4>ARCHIVE DEPARTMENT</h4>
+
+                <p>
+                    Browse archived project images
+                    and visual documentation.
+                </p>
+
+                <a asp-controller="PortfolioView"
+                   asp-action="Index"
+                   class="corp-button">
+                    ACCESS ARCHIVES
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- CREATE PORTFOLIO -->
+
+    <h3 class="section-heading">
+        <i class="bi bi-database-fill-add"></i>
+        FACILITY MANAGEMENT
+    </h3>
+
+    <div class="department-card text-center">
+
+        <div class="department-icon">
+            <i class="bi bi-file-earmark-plus"></i>
+        </div>
+
+        <h4>NEW RECORD REGISTRATION</h4>
+
+        <p>
+            Register a new course, project, and its
+            corresponding visual documentation.
+        </p>
+
+        <a asp-controller="PortfolioView"
+           asp-action="Create"
+           class="corp-button">
+            CREATE NEW RECORD
+        </a>
+
+    </div>
+
+    <!-- FOOTER WARNING -->
+
+    <div class="corp-footer">
+
+        <p>
+            LOBOTOMY CORPORATION
+        </p>
+
+        <p>
+            WORK SAFELY. FOLLOW PROTOCOL.
+            THE FACILITY DEPENDS ON YOU.
+        </p>
+
+        <p>
+            [ AUTHORIZED PERSONNEL ONLY ]
+        </p>
+
+    </div>
+
 </div>
