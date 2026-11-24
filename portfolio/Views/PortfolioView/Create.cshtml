@@ -1,0 +1,125 @@
+﻿@model portfolio.ViewModels.PortfolioViewModel
+
+@{
+    ViewData["Title"] = "Create Portfolio";
+}
+
+<div class="container mt-4">
+
+    <h2>Create Portfolio</h2>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["Success"]
+        </div>
+    }
+
+    <div asp-validation-summary="All"
+         class="text-danger"></div>
+
+    <form asp-controller="PortfolioView"
+          asp-action="Create"
+          method="post">
+
+        @Html.AntiForgeryToken()
+
+        <h4>Course Information</h4>
+        <hr />
+
+        <div class="mb-3">
+            <label asp-for="Course.CourseCode"
+                   class="form-label"></label>
+
+            <input asp-for="Course.CourseCode"
+                   class="form-control" />
+
+            <span asp-validation-for="Course.CourseCode"
+                  class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Course.CourseName"
+                   class="form-label"></label>
+
+            <input asp-for="Course.CourseName"
+                   class="form-control" />
+
+            <span asp-validation-for="Course.CourseName"
+                  class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Course.Description"
+                   class="form-label"></label>
+
+            <textarea asp-for="Course.Description"
+                      class="form-control"></textarea>
+        </div>
+
+
+        <h4>Project Information</h4>
+        <hr />
+
+        <div class="mb-3">
+            <label asp-for="Project.ProjectTitle"
+                   class="form-label"></label>
+
+            <input asp-for="Project.ProjectTitle"
+                   class="form-control" />
+
+            <span asp-validation-for="Project.ProjectTitle"
+                  class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Project.ProjectDescription"
+                   class="form-label"></label>
+
+            <textarea asp-for="Project.ProjectDescription"
+                      class="form-control"></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Project.VideoLink"
+                   class="form-label"></label>
+
+            <input asp-for="Project.VideoLink"
+                   class="form-control" />
+        </div>
+
+
+        <h4>Project Image Information</h4>
+        <hr />
+
+        <div class="mb-3">
+            <label asp-for="ProjectImage.ImageUrl"
+                   class="form-label"></label>
+
+            <input asp-for="ProjectImage.ImageUrl"
+                   class="form-control" />
+
+            <span asp-validation-for="ProjectImage.ImageUrl"
+                  class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="ProjectImage.ImageCaption"
+                   class="form-label"></label>
+
+            <input asp-for="ProjectImage.ImageCaption"
+                   class="form-control" />
+        </div>
+
+
+        <button type="submit" class="btn btn-primary">
+            Save Portfolio
+        </button>
+
+    </form>
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
