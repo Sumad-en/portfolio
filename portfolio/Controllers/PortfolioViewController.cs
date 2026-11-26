@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using portfolio.Data;
 using portfolio.ViewModels;
 
-
 namespace portfolio.Controllers
 {
     public class PortfolioViewController : Controller
@@ -15,12 +14,47 @@ namespace portfolio.Controllers
             _portfolio = portfolio;
         }
 
+        private static async Task ProcessUploadedImageAsync(PortfolioViewModel model)
+        {
+            if (model.ImageFile != null && model.ImageFile.Length > 0)
+            {
+                using var ms = new MemoryStream();
+                await model.ImageFile.CopyToAsync(ms);
+                model.ProjectImage.ImageData = ms.ToArray();
+                model.ProjectImage.ContentType = model.ImageFile.ContentType;
+            }
+        }
+
+        // PUBLIC: Anyone can view the portfolio
+        [HttpGet]
+        public async Task<IActionResult> Index()
+        {
+            var portfolios = await _portfolio.GetAllPortfoliosAsync();
+            return View(portfolios);
+        }
+
+        // PUBLIC: Streams stored images for the public portfolio
+        [HttpGet]
+        public async Task<IActionResult> GetImage(int id)
+        {
+            var image = await _portfolio.GetImageByIdAsync(id);
+            if (image == null)
+            {
+                return NotFound();
+            }
+
+            return File(image.Value.Data, image.Value.ContentType);
+        }
+
+        // LOCKED: Editor pages require Manager sign-in
+        [Authorize]
         [HttpGet]
         public IActionResult Create()
         {
             return View(new PortfolioViewModel());
         }
 
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(PortfolioViewModel model)
@@ -39,6 +73,7 @@ namespace portfolio.Controllers
 
             try
             {
+                await ProcessUploadedImageAsync(model);
                 await _portfolio.AddPortfolioAsync(model);
                 TempData["Success"] = "Portfolio created successfully!";
                 return RedirectToAction(nameof(Index));
@@ -50,14 +85,7 @@ namespace portfolio.Controllers
             }
         }
 
-
-        [HttpGet]
-        public async Task<IActionResult> Index()
-        {
-            var portfolios = await _portfolio.GetAllPortfoliosAsync();
-            return View(portfolios);
-        }
-
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
@@ -70,6 +98,7 @@ namespace portfolio.Controllers
             return View(portfolio);
         }
 
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, PortfolioViewModel model)
@@ -86,21 +115,19 @@ namespace portfolio.Controllers
 
             try
             {
+                await ProcessUploadedImageAsync(model);
                 await _portfolio.UpdatePortfolioAsync(model);
                 TempData["Success"] = "Archive record updated successfully!";
                 return RedirectToAction(nameof(Index));
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                ModelState.AddModelError("", "Unable to update portfolio. Please check your database connection.");
+                ModelState.AddModelError("", $"[DB ERROR]: {ex.Message}");
                 return View(model);
             }
         }
-        // ==========================================
-        // GET: /PortfolioView/Delete/5
-        // DISPLAY DELETE CONFIRMATION PAGE
-        // ==========================================
 
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
@@ -113,11 +140,7 @@ namespace portfolio.Controllers
             return View(portfolio);
         }
 
-        // ==========================================
-        // POST: /PortfolioView/Delete/5
-        // DELETE COURSE, PROJECT, AND IMAGE
-        // ==========================================
-
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id, IFormCollection form)
@@ -134,32 +157,5 @@ namespace portfolio.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-        // Helper to convert uploaded file into byte[]
-        private static async Task ProcessUploadedImageAsync(PortfolioViewModel model)
-        {
-            if (model.ImageFile != null && model.ImageFile.Length > 0)
-            {
-                using var ms = new MemoryStream();
-                await model.ImageFile.CopyToAsync(ms);
-                model.ProjectImage.ImageData = ms.ToArray();
-                model.ProjectImage.ContentType = model.ImageFile.ContentType;
-            }
-        }
-
-        // Endpoint that streams the PostgreSQL bytea image to <img> tags
-        [HttpGet]
-        public async Task<IActionResult> GetImage(int id)
-        {
-            var image = await _portfolio.GetImageByIdAsync(id);
-            if (image == null)
-            {
-                return NotFound();
-            }
-
-            return File(image.Value.Data, image.Value.ContentType);
-        }
-
-
-
     }
 }

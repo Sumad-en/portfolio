@@ -2,36 +2,6 @@
 [HttpGet]
 public IActionResult Create() { ... }
 
-[Authorize]
-[HttpPost]
-[ValidateAntiForgeryToken]
-public async Task<IActionResult>
-Create(PortfolioViewModel model) { ... }
-
-//Leave Index() and GetImage() WITHOUT [Authorize] so visitors can view your portfolio!
-
-[Authorize]
-[HttpGet]
-public async Task<IActionResult>
-Edit(int id) { ... }
-
-[Authorize]
-[HttpPost]
-[ValidateAntiForgeryToken]
-public async Task<IActionResult>
-Edit(int id, PortfolioViewModel model) { ... }
-
-[Authorize]
-[HttpGet]
-public async Task<IActionResult>
-Delete(int id) { ... }
-
-[Authorize]
-[HttpPost]
-[ValidateAntiForgeryToken]
-public async Task<IActionResult>
-Delete(int id, IFormCollection form) { ... }
-
 @model portfolio.ViewModels.PortfolioViewModel
 @{
     ViewData["Title"] = "DISCIPLINARY ARCHIVE // MODIFY RECORD";
