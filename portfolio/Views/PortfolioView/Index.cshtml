@@ -5,195 +5,29 @@
 }
 
 <style>
-    :root {
-        --lob-bg: #0b0912;
-        --lob-panel: #141021;
-        --lob-border: #4c2a85;
-        --lob-purple: #a855f7;
-        --lob-purple-bright: #c084fc;
-        --lob-cyan: #38bdf8;
-        --lob-red: #f43f5e;
-        --lob-green: #34d399;
-        --lob-text: #ece6f5;
-        --lob-muted: #9b8cb5;
-    }
-
-    body {
-        background-color: var(--lob-bg);
-        color: var(--lob-text);
-        font-family: 'Consolas', 'Courier New', monospace;
-    }
-
-    .lob-top-bar {
-        background-color: var(--lob-panel);
-        border: 2px solid var(--lob-border);
-        border-top: 4px solid var(--lob-purple);
-        padding: 1.25rem 1.5rem;
-        margin-bottom: 1.75rem;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex-wrap: wrap;
-        gap: 1rem;
-        box-shadow: 0 0 20px rgba(168, 85, 247, 0.15);
-    }
-
-    .lob-page-title {
-        color: var(--lob-purple-bright);
-        font-weight: 700;
-        letter-spacing: 2px;
-        text-transform: uppercase;
-        margin: 0;
-    }
-
-    .lob-btn-create {
-        background-color: rgba(168, 85, 247, 0.1);
-        border: 2px solid var(--lob-purple);
-        color: var(--lob-purple-bright);
-        padding: 0.5rem 1.25rem;
-        font-weight: 700;
-        letter-spacing: 1.5px;
-        text-transform: uppercase;
-        text-decoration: none;
-        transition: 0.15s;
-    }
-
-        .lob-btn-create:hover {
-            background-color: var(--lob-purple);
-            color: #0b0912;
-            box-shadow: 0 0 15px rgba(168, 85, 247, 0.55);
-        }
-
-    .lob-alert-success {
-        background-color: rgba(52, 211, 153, 0.1);
-        border: 1px solid var(--lob-green);
-        border-left: 5px solid var(--lob-green);
-        color: var(--lob-green);
-        padding: 0.75rem 1rem;
-        margin-bottom: 1.5rem;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        font-size: 0.85rem;
-    }
-
-    .lob-alert-empty {
-        background-color: rgba(168, 85, 247, 0.1);
-        border: 1px solid var(--lob-purple);
-        border-left: 5px solid var(--lob-purple);
-        color: var(--lob-purple-bright);
-        padding: 1.25rem;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-    }
-
-    .lob-unit-card {
-        background-color: var(--lob-panel);
-        border: 2px solid var(--lob-border);
-        margin-bottom: 2rem;
-        box-shadow: 0 0 22px rgba(0, 0, 0, 0.85);
-    }
-
-    .lob-hazard-strip {
-        height: 8px;
-        background: repeating-linear-gradient(-45deg, var(--lob-purple), var(--lob-purple) 10px, #0f0c1a 10px, #0f0c1a 20px);
-        border-bottom: 1px solid var(--lob-purple);
-    }
-
-    .lob-unit-header {
-        background-color: #0f0c1a;
-        border-bottom: 1px solid var(--lob-border);
-        padding: 1rem 1.5rem;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-    }
-
-        .lob-unit-header h4 {
-            color: var(--lob-purple-bright);
-            margin: 0;
-            font-weight: 700;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-        }
-
-    .lob-status-tag {
-        border: 1px solid var(--lob-green);
-        color: var(--lob-green);
-        font-size: 0.75rem;
-        padding: 0.15rem 0.55rem;
-        letter-spacing: 1.5px;
-    }
-
-    .lob-section-bar {
-        background-color: #1c162e;
-        border-left: 4px solid var(--lob-purple);
-        color: var(--lob-purple-bright);
-        padding: 0.35rem 0.85rem;
-        font-size: 0.85rem;
-        font-weight: 700;
-        letter-spacing: 1.5px;
-        text-transform: uppercase;
-        margin-bottom: 0.85rem;
-    }
-
-    .lob-field-label {
-        color: var(--lob-muted);
-        text-transform: uppercase;
-        font-size: 0.85rem;
-        letter-spacing: 0.5px;
-    }
-
-    .lob-divider {
-        border-color: var(--lob-border);
-        opacity: 1;
-        margin: 1.5rem 0;
-    }
-
-    .lob-btn-video {
-        background-color: transparent;
-        border: 1px solid var(--lob-cyan);
-        color: var(--lob-cyan);
-        padding: 0.25rem 0.85rem;
-        font-size: 0.8rem;
-        letter-spacing: 1px;
-        text-transform: uppercase;
-        text-decoration: none;
-        transition: 0.15s;
-    }
-
-        .lob-btn-video:hover {
-            background-color: var(--lob-cyan);
-            color: #0b0912;
-        }
-
-    .lob-surveillance-frame {
-        display: inline-block;
-        border: 2px solid var(--lob-border);
-        background-color: #09070f;
-        padding: 6px;
-        margin-bottom: 0.75rem;
-    }
-
-    .lob-surveillance-tag {
-        display: block;
-        background-color: #0f0c1a;
-        color: var(--lob-red);
-        font-size: 0.7rem;
-        letter-spacing: 1.5px;
-        padding: 2px 6px;
-        margin-bottom: 5px;
-        border-bottom: 1px solid var(--lob-border);
-    }
-
-    .lob-surveillance-img {
-        max-width: 320px;
-        max-height: 210px;
-        object-fit: cover;
-        display: block;
-        border: 1px solid #2e1d4d;
-    }
+    :root { --lob-bg: #0b0912; --lob-panel: #141021; --lob-border: #4c2a85; --lob-purple: #a855f7; --lob-purple-bright: #c084fc; --lob-cyan: #38bdf8; --lob-red: #f43f5e; --lob-green: #34d399; --lob-text: #ece6f5; --lob-muted: #9b8cb5; }
+    body { background-color: var(--lob-bg); color: var(--lob-text); font-family: 'Consolas', 'Courier New', monospace; }
+    .lob-top-bar { background-color: var(--lob-panel); border: 2px solid var(--lob-border); border-top: 4px solid var(--lob-purple); padding: 1.25rem 1.5rem; margin-bottom: 1.75rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; box-shadow: 0 0 20px rgba(168, 85, 247, 0.15); }
+    .lob-page-title { color: var(--lob-purple-bright); font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin: 0; }
+    .lob-btn-create { background-color: rgba(168, 85, 247, 0.1); border: 2px solid var(--lob-purple); color: var(--lob-purple-bright); padding: 0.5rem 1.25rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; text-decoration: none; transition: 0.15s; cursor: pointer; }
+    .lob-btn-create:hover { background-color: var(--lob-purple); color: #0b0912; box-shadow: 0 0 15px rgba(168, 85, 247, 0.55); }
+    .lob-btn-logout { background-color: rgba(244, 63, 94, 0.1); border: 2px solid var(--lob-red); color: var(--lob-red); padding: 0.5rem 1.25rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; transition: 0.15s; cursor: pointer; }
+    .lob-btn-logout:hover { background-color: var(--lob-red); color: #0b0912; box-shadow: 0 0 15px rgba(244, 63, 94, 0.55); }
+    .lob-alert-success { background-color: rgba(52, 211, 153, 0.1); border: 1px solid var(--lob-green); border-left: 5px solid var(--lob-green); color: var(--lob-green); padding: 0.75rem 1rem; margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: 1px; font-size: 0.85rem; }
+    .lob-alert-empty { background-color: rgba(168, 85, 247, 0.1); border: 1px solid var(--lob-purple); border-left: 5px solid var(--lob-purple); color: var(--lob-purple-bright); padding: 1.25rem; text-transform: uppercase; letter-spacing: 1px; }
+    .lob-unit-card { background-color: var(--lob-panel); border: 2px solid var(--lob-border); margin-bottom: 2rem; box-shadow: 0 0 22px rgba(0, 0, 0, 0.85); }
+    .lob-hazard-strip { height: 8px; background: repeating-linear-gradient(-45deg, var(--lob-purple), var(--lob-purple) 10px, #0f0c1a 10px, #0f0c1a 20px); border-bottom: 1px solid var(--lob-purple); }
+    .lob-unit-header { background-color: #0f0c1a; border-bottom: 1px solid var(--lob-border); padding: 1rem 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+    .lob-unit-header h4 { color: var(--lob-purple-bright); margin: 0; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; }
+    .lob-status-tag { border: 1px solid var(--lob-green); color: var(--lob-green); font-size: 0.75rem; padding: 0.15rem 0.55rem; letter-spacing: 1.5px; }
+    .lob-section-bar { background-color: #1c162e; border-left: 4px solid var(--lob-purple); color: var(--lob-purple-bright); padding: 0.35rem 0.85rem; font-size: 0.85rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 0.85rem; }
+    .lob-field-label { color: var(--lob-muted); text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.5px; }
+    .lob-divider { border-color: var(--lob-border); opacity: 1; margin: 1.5rem 0; }
+    .lob-btn-video { background-color: transparent; border: 1px solid var(--lob-cyan); color: var(--lob-cyan); padding: 0.25rem 0.85rem; font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase; text-decoration: none; transition: 0.15s; }
+    .lob-btn-video:hover { background-color: var(--lob-cyan); color: #0b0912; }
+    .lob-surveillance-frame { display: inline-block; border: 2px solid var(--lob-border); background-color: #09070f; padding: 6px; margin-bottom: 0.75rem; }
+    .lob-surveillance-tag { display: block; background-color: #0f0c1a; color: var(--lob-red); font-size: 0.7rem; letter-spacing: 1.5px; padding: 2px 6px; margin-bottom: 5px; border-bottom: 1px solid var(--lob-border); }
+    .lob-surveillance-img { max-width: 320px; max-height: 210px; object-fit: cover; display: block; border: 1px solid #2e1d4d; }
 </style>
 
 <div class="container mt-4 mb-5">
@@ -208,9 +42,27 @@
             </h2>
         </div>
 
-        <a asp-controller="PortfolioView" asp-action="Create" class="lob-btn-create">
-            <i class="bi bi-plus-square"></i> + Register New Entry
-        </a>
+        <div class="d-flex align-items-center gap-2 flex-wrap">
+            @if (User.Identity?.IsAuthenticated == true)
+            {
+                <a asp-controller="PortfolioView" asp-action="Create" class="lob-btn-create">
+                    <i class="bi bi-plus-square"></i> + Register New Entry
+                </a>
+
+                <form asp-controller="Account" asp-action="Logout" method="post" class="d-inline m-0">
+                    @Html.AntiForgeryToken()
+                    <button type="submit" class="lob-btn-logout">
+                        <i class="bi bi-lock-fill"></i> [ LOCK TERMINAL ]
+                    </button>
+                </form>
+            }
+            else
+            {
+                <a asp-controller="Account" asp-action="Login" class="lob-btn-create">
+                    <i class="bi bi-shield-lock"></i> Manager Login
+                </a>
+            }
+        </div>
     </div>
 
     @if (TempData["Success"] != null)
@@ -236,19 +88,22 @@
                     <div class="d-flex align-items-center gap-2 flex-wrap">
                         <span class="lob-status-tag">STATUS: CONTAINED</span>
 
-                        <a asp-controller="PortfolioView"
-                           asp-action="Edit"
-                           asp-route-id="@item.Course.CourseId"
-                           style="border: 1px solid #c084fc; color: #c084fc; padding: 0.15rem 0.6rem; font-size: 0.75rem; letter-spacing: 1px; text-decoration: none;">
-                            <i class="bi bi-pencil-square"></i> MODIFY
-                        </a>
+                        @if (User.Identity?.IsAuthenticated == true)
+                        {
+                            <a asp-controller="PortfolioView"
+                               asp-action="Edit"
+                               asp-route-id="@item.Course.CourseId"
+                               style="border: 1px solid #c084fc; color: #c084fc; padding: 0.15rem 0.6rem; font-size: 0.75rem; letter-spacing: 1px; text-decoration: none;">
+                                <i class="bi bi-pencil-square"></i> MODIFY
+                            </a>
 
-                        <a asp-controller="PortfolioView"
-                           asp-action="Delete"
-                           asp-route-id="@item.Course.CourseId"
-                           style="border: 1px solid #f43f5e; color: #f43f5e; padding: 0.15rem 0.6rem; font-size: 0.75rem; letter-spacing: 1px; text-decoration: none;">
-                            <i class="bi bi-trash-fill"></i> SUPPRESS
-                        </a>
+                            <a asp-controller="PortfolioView"
+                               asp-action="Delete"
+                               asp-route-id="@item.Course.CourseId"
+                               style="border: 1px solid #f43f5e; color: #f43f5e; padding: 0.15rem 0.6rem; font-size: 0.75rem; letter-spacing: 1px; text-decoration: none;">
+                                <i class="bi bi-trash-fill"></i> SUPPRESS
+                            </a>
+                        }
                     </div>
                 </div>
 
@@ -295,7 +150,7 @@
     else
     {
         <div class="lob-alert-empty">
-            [WARNING]: NO ARCHIVE RECORDS FOUND IN MAINFRAME. CLICK "+ REGISTER NEW ENTRY" TO INITIALIZE DATA.
+            [WARNING]: NO ARCHIVE RECORDS FOUND IN MAINFRAME.
         </div>
     }
 

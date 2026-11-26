@@ -1,0 +1,123 @@
+﻿@{
+    ViewData["Title"] = "L-CORP // SECURITY CLEARANCE";
+}
+
+<style>
+    :root {
+        --lob-bg: #0c0a0a;
+        --lob-panel: #1a1010;
+        --lob-border: #6e1b1b;
+        --lob-red: #ff3b3b;
+        --lob-crimson: #b81d1d;
+        --lob-text: #f0dede;
+        --lob-muted: #b89898;
+    }
+
+    body {
+        background-color: var(--lob-bg);
+        color: var(--lob-text);
+        font-family: 'Consolas', 'Courier New', monospace;
+    }
+
+    .lob-login-box {
+        max-width: 460px;
+        margin: 4rem auto;
+        background-color: var(--lob-panel);
+        border: 2px solid var(--lob-red);
+        box-shadow: 0 0 30px rgba(255, 59, 59, 0.2);
+    }
+
+    .lob-hazard {
+        height: 10px;
+        background: repeating-linear-gradient(-45deg, var(--lob-red), var(--lob-red) 12px, #110b0b 12px, #110b0b 24px);
+        border-bottom: 2px solid var(--lob-red);
+    }
+
+    .lob-label {
+        color: var(--lob-muted);
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 0.35rem;
+        display: block;
+    }
+
+    .lob-input {
+        background-color: #0f0909 !important;
+        border: 1px solid var(--lob-border) !important;
+        border-radius: 0 !important;
+        color: var(--lob-text) !important;
+        font-family: 'Consolas', 'Courier New', monospace;
+    }
+
+        .lob-input:focus {
+            border-color: var(--lob-red) !important;
+            box-shadow: 0 0 8px rgba(255, 59, 59, 0.4) !important;
+        }
+
+    .lob-btn-login {
+        background-color: var(--lob-crimson);
+        border: 2px solid var(--lob-red);
+        color: #fff;
+        border-radius: 0;
+        padding: 0.65rem;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        width: 100%;
+        transition: 0.15s;
+    }
+
+        .lob-btn-login:hover {
+            background-color: var(--lob-red);
+            color: #0c0a0a;
+        }
+
+    .lob-error {
+        background-color: rgba(255, 59, 59, 0.15);
+        border-left: 4px solid var(--lob-red);
+        color: var(--lob-red);
+        padding: 0.65rem 0.9rem;
+        font-size: 0.85rem;
+        margin-bottom: 1rem;
+    }
+</style>
+
+<div class="lob-login-box">
+    <div class="lob-hazard"></div>
+
+    <div class="p-4">
+        <small class="d-block text-uppercase" style="color: var(--lob-muted); letter-spacing: 2px;">
+            L-CORP // MAINFRAME SECURITY
+        </small>
+        <h3 style="color: var(--lob-red); font-weight: 700; letter-spacing: 2px;" class="mb-4">
+            MANAGER AUTHENTICATION
+        </h3>
+
+        @if (ViewBag.Error != null)
+        {
+            <div class="lob-error">@ViewBag.Error</div>
+        }
+
+        <form asp-controller="Account" asp-action="Login" method="post">
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="returnUrl" value="@ViewData["ReturnUrl"]" />
+
+            <div class="mb-3">
+                <label class="lob-label">▸ Manager ID</label>
+                <input type="text" name="username" class="form-control lob-input" required autocomplete="username" />
+            </div>
+
+            <div class="mb-4">
+                <label class="lob-label">▸ Security Passcode</label>
+                <input type="password" name="password" class="form-control lob-input" required autocomplete="current-password" />
+            </div>
+
+            <button type="submit" class="lob-btn-login">
+                [ VERIFY CLEARANCE ]
+            </button>
+        </form>
+    </div>
+
+    <div class="lob-hazard"></div>
+</div>

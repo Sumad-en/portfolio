@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using portfolio.Data;
 using portfolio.ViewModels;
+
 
 namespace portfolio.Controllers
 {
