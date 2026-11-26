@@ -1,129 +1,140 @@
 ﻿@{
-    ViewData["Title"] = "Lobotomy Corporation";
+    ViewData["Title"] = "Lobotomy Corporation // Central Command Team";
 }
 
 <style>
+    body {
+        background-color: #0c0b08;
+    }
+
     .lobotomy-home {
-        color: #e8e0c5;
-        font-family: Arial, sans-serif;
+        color: #f5eedc;
+        font-family: 'Consolas', 'Courier New', monospace;
         padding: 25px 10px;
     }
 
     .corp-header {
-        background: linear-gradient(135deg, #252319, #111111);
-        border: 2px solid #c6a832;
+        background: linear-gradient(135deg, #2b220c, #12100a);
+        border: 2px solid #d49b00;
         padding: 35px;
         text-align: center;
         position: relative;
+        box-shadow: 0 0 25px rgba(255, 190, 11, 0.22);
     }
 
     .corp-logo {
         font-size: 65px;
-        color: #e5c443;
+        color: #ffbe0b;
         margin-bottom: 10px;
+        text-shadow: 0 0 15px rgba(255, 190, 11, 0.5);
     }
 
     .corp-title {
         font-size: 38px;
-        font-weight: 900;
+        font-weight: 700;
         letter-spacing: 5px;
-        color: #e5c443;
+        color: #ffbe0b;
     }
 
     .corp-subtitle {
-        color: #aaa17e;
+        color: #c2b082;
         letter-spacing: 4px;
         font-size: 12px;
     }
 
     .corp-status {
-        background: #d3b43f;
-        color: #171717;
+        background: #ffbe0b;
+        color: #12100a;
         padding: 7px 15px;
-        font-weight: bold;
+        font-weight: 700;
         font-size: 12px;
         display: inline-block;
         margin-top: 20px;
+        letter-spacing: 1.5px;
     }
 
     .section-heading {
-        color: #e5c443;
-        border-bottom: 1px solid #9c842f;
+        color: #ffbe0b;
+        border-bottom: 1px solid #997000;
         padding-bottom: 12px;
         margin: 35px 0 20px;
         letter-spacing: 2px;
         font-size: 20px;
+        font-weight: 700;
     }
 
     .department-card {
-        background: linear-gradient(145deg, #24231d, #121212);
-        border: 1px solid #71602b;
+        background: linear-gradient(145deg, #241d0e, #12100a);
+        border: 1px solid #7a5900;
         padding: 25px;
         height: 100%;
         transition: 0.3s;
     }
 
         .department-card:hover {
-            border-color: #e5c443;
+            border-color: #ffbe0b;
             transform: translateY(-5px);
-            box-shadow: 0 5px 20px rgba(229,196,67,0.15);
+            box-shadow: 0 5px 20px rgba(255, 190, 11, 0.25);
         }
 
     .department-icon {
         font-size: 38px;
-        color: #e5c443;
+        color: #ffbe0b;
         margin-bottom: 15px;
     }
 
     .department-card h4 {
-        color: #e5c443;
+        color: #ffbe0b;
         font-size: 17px;
+        font-weight: 700;
         letter-spacing: 2px;
     }
 
     .department-card p {
-        color: #aaa48d;
+        color: #bfb18e;
         font-size: 14px;
         min-height: 45px;
     }
 
     .corp-button {
         display: inline-block;
-        background: #c6a832;
-        color: #171717;
+        background: #d49b00;
+        color: #12100a;
         padding: 10px 20px;
         text-decoration: none;
-        font-weight: bold;
-        letter-spacing: 1px;
+        font-weight: 700;
+        letter-spacing: 1.5px;
         transition: 0.3s;
     }
 
         .corp-button:hover {
-            background: #f1d65b;
-            color: black;
+            background: #ffd13b;
+            color: #000000;
+            box-shadow: 0 0 12px rgba(255, 190, 11, 0.55);
         }
 
     .warning-panel {
-        background: rgba(112, 85, 18, 0.15);
-        border: 1px solid #a88a2f;
-        border-left: 5px solid #e5c443;
+        background: rgba(166, 124, 0, 0.16);
+        border: 1px solid #a67c00;
+        border-left: 5px solid #ffbe0b;
         padding: 20px;
         margin-top: 30px;
     }
 
         .warning-panel h5 {
-            color: #e5c443;
+            color: #ffbe0b;
+            font-weight: 700;
             letter-spacing: 2px;
         }
 
         .warning-panel p {
-            color: #b9b19a;
+            color: #d6cbb0;
             margin-bottom: 0;
         }
 
     .corp-footer {
         text-align: center;
-        color: #756d54;
+        color: #857652;
         font-size: 11px;
         letter-spacing: 3px;
         margin-top: 40px;
@@ -155,12 +166,12 @@
         </h1>
 
         <p class="corp-subtitle">
-            FACE THE FEAR, BUILD THE FUTURE
+            CENTRAL COMMAND TEAM // FACE THE FEAR, BUILD THE FUTURE
         </p>
 
         <div class="corp-status">
             <i class="bi bi-circle-fill"></i>
-            FACILITY SYSTEM ONLINE
+            CENTRAL COMMAND ONLINE
         </div>
 
     </div>
@@ -313,7 +324,7 @@
     <div class="corp-footer">
 
         <p>
-            LOBOTOMY CORPORATION
+            LOBOTOMY CORPORATION // CENTRAL COMMAND SECTOR
         </p>
 
         <p>

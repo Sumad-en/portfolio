@@ -1,133 +1,301 @@
 ﻿@model IEnumerable<portfolio.ViewModels.PortfolioViewModel>
 
 @{
-    ViewData["Title"] = "Portfolio";
+    ViewData["Title"] = "INFORMATION ARCHIVE // CONTAINMENT RECORDS";
 }
 
-<div class="container mt-4">
+<style>
+    :root {
+        --lob-bg: #0b0912;
+        --lob-panel: #141021;
+        --lob-border: #4c2a85;
+        --lob-purple: #a855f7;
+        --lob-purple-bright: #c084fc;
+        --lob-cyan: #38bdf8;
+        --lob-red: #f43f5e;
+        --lob-green: #34d399;
+        --lob-text: #ece6f5;
+        --lob-muted: #9b8cb5;
+    }
 
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="page-title">
-            <i class="bi bi-briefcase-fill"></i> My Portfolio
-        </h2>
+    body {
+        background-color: var(--lob-bg);
+        color: var(--lob-text);
+        font-family: 'Consolas', 'Courier New', monospace;
+    }
 
-        <a asp-controller="PortfolioView"
-           asp-action="Create"
-           class="btn btn-primary">
-            <i class="bi bi-plus-circle"></i> Create Portfolio
+    .lob-top-bar {
+        background-color: var(--lob-panel);
+        border: 2px solid var(--lob-border);
+        border-top: 4px solid var(--lob-purple);
+        padding: 1.25rem 1.5rem;
+        margin-bottom: 1.75rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+        box-shadow: 0 0 20px rgba(168, 85, 247, 0.15);
+    }
+
+    .lob-page-title {
+        color: var(--lob-purple-bright);
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        margin: 0;
+    }
+
+    .lob-btn-create {
+        background-color: rgba(168, 85, 247, 0.1);
+        border: 2px solid var(--lob-purple);
+        color: var(--lob-purple-bright);
+        padding: 0.5rem 1.25rem;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        text-decoration: none;
+        transition: 0.15s;
+    }
+
+        .lob-btn-create:hover {
+            background-color: var(--lob-purple);
+            color: #0b0912;
+            box-shadow: 0 0 15px rgba(168, 85, 247, 0.55);
+        }
+
+    .lob-alert-success {
+        background-color: rgba(52, 211, 153, 0.1);
+        border: 1px solid var(--lob-green);
+        border-left: 5px solid var(--lob-green);
+        color: var(--lob-green);
+        padding: 0.75rem 1rem;
+        margin-bottom: 1.5rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-size: 0.85rem;
+    }
+
+    .lob-alert-empty {
+        background-color: rgba(168, 85, 247, 0.1);
+        border: 1px solid var(--lob-purple);
+        border-left: 5px solid var(--lob-purple);
+        color: var(--lob-purple-bright);
+        padding: 1.25rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .lob-unit-card {
+        background-color: var(--lob-panel);
+        border: 2px solid var(--lob-border);
+        margin-bottom: 2rem;
+        box-shadow: 0 0 22px rgba(0, 0, 0, 0.85);
+    }
+
+    .lob-hazard-strip {
+        height: 8px;
+        background: repeating-linear-gradient(-45deg, var(--lob-purple), var(--lob-purple) 10px, #0f0c1a 10px, #0f0c1a 20px);
+        border-bottom: 1px solid var(--lob-purple);
+    }
+
+    .lob-unit-header {
+        background-color: #0f0c1a;
+        border-bottom: 1px solid var(--lob-border);
+        padding: 1rem 1.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+        .lob-unit-header h4 {
+            color: var(--lob-purple-bright);
+            margin: 0;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+    .lob-status-tag {
+        border: 1px solid var(--lob-green);
+        color: var(--lob-green);
+        font-size: 0.75rem;
+        padding: 0.15rem 0.55rem;
+        letter-spacing: 1.5px;
+    }
+
+    .lob-section-bar {
+        background-color: #1c162e;
+        border-left: 4px solid var(--lob-purple);
+        color: var(--lob-purple-bright);
+        padding: 0.35rem 0.85rem;
+        font-size: 0.85rem;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        margin-bottom: 0.85rem;
+    }
+
+    .lob-field-label {
+        color: var(--lob-muted);
+        text-transform: uppercase;
+        font-size: 0.85rem;
+        letter-spacing: 0.5px;
+    }
+
+    .lob-divider {
+        border-color: var(--lob-border);
+        opacity: 1;
+        margin: 1.5rem 0;
+    }
+
+    .lob-btn-video {
+        background-color: transparent;
+        border: 1px solid var(--lob-cyan);
+        color: var(--lob-cyan);
+        padding: 0.25rem 0.85rem;
+        font-size: 0.8rem;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        text-decoration: none;
+        transition: 0.15s;
+    }
+
+        .lob-btn-video:hover {
+            background-color: var(--lob-cyan);
+            color: #0b0912;
+        }
+
+    .lob-surveillance-frame {
+        display: inline-block;
+        border: 2px solid var(--lob-border);
+        background-color: #09070f;
+        padding: 6px;
+        margin-bottom: 0.75rem;
+    }
+
+    .lob-surveillance-tag {
+        display: block;
+        background-color: #0f0c1a;
+        color: var(--lob-red);
+        font-size: 0.7rem;
+        letter-spacing: 1.5px;
+        padding: 2px 6px;
+        margin-bottom: 5px;
+        border-bottom: 1px solid var(--lob-border);
+    }
+
+    .lob-surveillance-img {
+        max-width: 320px;
+        max-height: 210px;
+        object-fit: cover;
+        display: block;
+        border: 1px solid #2e1d4d;
+    }
+</style>
+
+<div class="container mt-4 mb-5">
+
+    <div class="lob-top-bar">
+        <div>
+            <small class="d-block text-uppercase" style="color: var(--lob-muted); letter-spacing: 2px;">
+                L-CORP // INFORMATION TEAM ARCHIVE
+            </small>
+            <h2 class="lob-page-title">
+                <i class="bi bi-terminal-fill"></i> Containment Portfolio Logs
+            </h2>
+        </div>
+
+        <a asp-controller="PortfolioView" asp-action="Create" class="lob-btn-create">
+            <i class="bi bi-plus-square"></i> + Register New Entry
         </a>
     </div>
 
     @if (TempData["Success"] != null)
     {
-        <div class="alert alert-success">
-            @TempData["Success"]
+        <div class="lob-alert-success">
+            [SYSTEM LOG]: @TempData["Success"]
         </div>
     }
 
-    @if (Model.Any())
+    @if (Model != null && Model.Any())
     {
         @foreach (var item in Model)
         {
-            <div class="card bg-dark text-white mb-4 shadow">
+            <div class="lob-unit-card">
+                <div class="lob-hazard-strip"></div>
 
-                <div class="card-header">
+                <div class="lob-unit-header">
                     <h4>
-                        <i class="bi bi-book"></i>
-                        @item.Course.CourseCode -
-                        @item.Course.CourseName
+                        <i class="bi bi-cpu"></i>
+                        [@item.Course.CourseCode] // @item.Course.CourseName
                     </h4>
+
+                    <div class="d-flex align-items-center gap-2 flex-wrap">
+                        <span class="lob-status-tag">STATUS: CONTAINED</span>
+
+                        <a asp-controller="PortfolioView"
+                           asp-action="Edit"
+                           asp-route-id="@item.Course.CourseId"
+                           style="border: 1px solid #c084fc; color: #c084fc; padding: 0.15rem 0.6rem; font-size: 0.75rem; letter-spacing: 1px; text-decoration: none;">
+                            <i class="bi bi-pencil-square"></i> MODIFY
+                        </a>
+
+                        <a asp-controller="PortfolioView"
+                           asp-action="Delete"
+                           asp-route-id="@item.Course.CourseId"
+                           style="border: 1px solid #f43f5e; color: #f43f5e; padding: 0.15rem 0.6rem; font-size: 0.75rem; letter-spacing: 1px; text-decoration: none;">
+                            <i class="bi bi-trash-fill"></i> SUPPRESS
+                        </a>
+                    </div>
                 </div>
 
-                <div class="card-body">
+                <div class="p-4">
+                    <div class="lob-section-bar">Department &amp; Course Classification</div>
+                    <p class="mb-2"><span class="lob-field-label">▸ Subject Code:</span> <span class="text-white">@item.Course.CourseCode</span></p>
+                    <p class="mb-2"><span class="lob-field-label">▸ Department Name:</span> <span class="text-white">@item.Course.CourseName</span></p>
+                    <p class="mb-0"><span class="lob-field-label">▸ Managerial Overview:</span> <span>@item.Course.Description</span></p>
 
-                    <!-- COURSE INFORMATION -->
+                    <hr class="lob-divider" />
 
-                    <h5 class="text-info">
-                        Course Information
-                    </h5>
-
-                    <p>
-                        <strong>Course Code:</strong>
-                        @item.Course.CourseCode
-                    </p>
-
-                    <p>
-                        <strong>Course Name:</strong>
-                        @item.Course.CourseName
-                    </p>
-
-                    <p>
-                        <strong>Description:</strong>
-                        @item.Course.Description
-                    </p>
-
-                    <hr />
-
-                    <!-- PROJECT INFORMATION -->
-
-                    <h5 class="text-info">
-                        <i class="bi bi-folder"></i>
-                        Project Information
-                    </h5>
-
-                    <p>
-                        <strong>Project Title:</strong>
-                        @item.Project.ProjectTitle
-                    </p>
-
-                    <p>
-                        <strong>Description:</strong>
-                        @item.Project.ProjectDescription
-                    </p>
-
-                    <p>
-                        <strong>Video Link:</strong>
-
+                    <div class="lob-section-bar"><i class="bi bi-folder2-open"></i> Observation Log &amp; Project Data</div>
+                    <p class="mb-2"><span class="lob-field-label">▸ Observation Title:</span> <span class="text-white">@item.Project.ProjectTitle</span></p>
+                    <p class="mb-2"><span class="lob-field-label">▸ Behavioral Notes:</span> <span>@item.Project.ProjectDescription</span></p>
+                    <p class="mb-0">
+                        <span class="lob-field-label">▸ External Feed:</span>
                         @if (!string.IsNullOrEmpty(item.Project.VideoLink))
                         {
-                            <a href="@item.Project.VideoLink"
-                               target="_blank"
-                               class="btn btn-sm btn-info">
-                                View Video
+                            <a href="@item.Project.VideoLink" target="_blank" class="lob-btn-video ms-2">
+                                <i class="bi bi-play-fill"></i> Access Video Feed
                             </a>
                         }
                         else
                         {
-                            <span>No video available</span>
+                            <span style="color: var(--lob-muted);">[NO RECORDED FEED AVAILABLE]</span>
                         }
                     </p>
 
-                    <hr />
+                    <hr class="lob-divider" />
 
-                    <!-- PROJECT IMAGE INFORMATION -->
-
-                    <h5 class="text-info">
-                        <i class="bi bi-images"></i>
-                        Project Image
-                    </h5>
-
+                    <div class="lob-section-bar"><i class="bi bi-camera-video"></i> Visual Surveillance Capture</div>
                     @if (!string.IsNullOrEmpty(item.ProjectImage.ImageUrl))
                     {
-                        <img src="@item.ProjectImage.ImageUrl"
-                             alt="@item.ProjectImage.ImageCaption"
-                             class="img-fluid rounded mb-3"
-                             style="max-width:300px; max-height:200px; object-fit:cover;" />
+                        <div class="lob-surveillance-frame">
+                            <span class="lob-surveillance-tag">● REC // CAM-01</span>
+                            <img src="@item.ProjectImage.ImageUrl" alt="@item.ProjectImage.ImageCaption" class="img-fluid lob-surveillance-img" />
+                        </div>
                     }
-
-                    <p>
-                        <strong>Image Caption:</strong>
-                        @item.ProjectImage.ImageCaption
-                    </p>
-
+                    <p class="mb-0"><span class="lob-field-label">▸ Capture Log Note:</span> <span>@item.ProjectImage.ImageCaption</span></p>
                 </div>
             </div>
         }
     }
     else
     {
-        <div class="alert alert-info">
-            No portfolio records found. Click Create Portfolio to add one.
+        <div class="lob-alert-empty">
+            [WARNING]: NO ARCHIVE RECORDS FOUND IN MAINFRAME. CLICK "+ REGISTER NEW ENTRY" TO INITIALIZE DATA.
         </div>
     }
 

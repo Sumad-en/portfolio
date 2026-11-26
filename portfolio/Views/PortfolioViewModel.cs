@@ -1,13 +1,15 @@
-﻿using portfolio.Models;
+﻿using Microsoft.AspNetCore.Http;
+using portfolio.Models;
 
 namespace portfolio.ViewModels
 {
     public class PortfolioViewModel
     {
-        public Course Course { get; set; } = new Course();
+        public Course Course { get; set; } = new();
+        public Project Project { get; set; } = new();
+        public ProjectImage ProjectImage { get; set; } = new();
 
-        public Project Project { get; set; } = new Project();
-
-        public ProjectImage ProjectImage { get; set; } = new ProjectImage();
+        // Holds the uploaded file from the browser form
+        public IFormFile? ImageFile { get; set; }
     }
 }

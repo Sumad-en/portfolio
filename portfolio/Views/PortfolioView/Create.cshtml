@@ -1,124 +1,237 @@
-﻿
-@model portfolio.ViewModels.PortfolioViewModel
-
+﻿@model portfolio.ViewModels.PortfolioViewModel
 @{
-    ViewData["Title"] = "Create Portfolio";
+    ViewData["Title"] = "EXTRACTION ARCHIVE // NEW ENTRY";
 }
 
-<div class="container mt-4">
-
-    <h2>Create Portfolio</h2>
-
-    @if (TempData["Success"] != null)
-    {
-        <div class="alert alert-success">
-            @TempData["Success"]
-        </div>
+<style>
+    :root {
+        --lob-bg: #070709;
+        --lob-panel: #111116;
+        --lob-border: #4a3c1d;
+        --lob-gold: #c9a03b;
+        --lob-gold-bright: #e8c266;
+        --lob-red: #c93b3b;
+        --lob-green: #4ebf7a;
+        --lob-text: #e6dcc3;
+        --lob-muted: #8c826b;
     }
 
-    <div asp-validation-summary="All"
-         class="text-danger"></div>
+    body {
+        background-color: var(--lob-bg);
+        color: var(--lob-text);
+        font-family: 'Consolas', 'Courier New', monospace;
+    }
 
-    <form asp-controller="PortfolioView"
-          asp-action="Create"
-          method="post">
+    .lob-terminal {
+        background-color: var(--lob-panel);
+        border: 2px solid var(--lob-border);
+        box-shadow: 0 0 30px rgba(0, 0, 0, 0.95), 0 0 15px rgba(201, 160, 59, 0.12);
+        position: relative;
+        overflow: hidden;
+    }
 
-        @Html.AntiForgeryToken()
+    .lob-hazard-bar {
+        height: 10px;
+        background: repeating-linear-gradient(-45deg, var(--lob-gold), var(--lob-gold) 12px, #0a0a0d 12px, #0a0a0d 24px);
+        border-bottom: 2px solid var(--lob-gold);
+    }
 
-        <h4>Course Information</h4>
-        <hr />
+    .lob-header {
+        background-color: #0b0b0e;
+        border-bottom: 1px solid var(--lob-border);
+        padding: 1.25rem 1.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
 
-        <div class="mb-3">
-            <label asp-for="Course.CourseCode"
-                   class="form-label"></label>
+    .lob-title {
+        color: var(--lob-gold-bright);
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        margin: 0;
+    }
 
-            <input asp-for="Course.CourseCode"
-                   class="form-control" />
+    .lob-badge {
+        border: 1px solid var(--lob-gold);
+        color: var(--lob-gold-bright);
+        background-color: rgba(201, 160, 59, 0.08);
+        padding: 0.2rem 0.6rem;
+        font-size: 0.75rem;
+        letter-spacing: 1.5px;
+    }
 
-            <span asp-validation-for="Course.CourseCode"
-                  class="text-danger"></span>
+    .lob-section-header {
+        background-color: #18171c;
+        border-left: 4px solid var(--lob-gold);
+        color: var(--lob-gold-bright);
+        padding: 0.45rem 0.85rem;
+        font-size: 0.95rem;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        margin-top: 1.75rem;
+        margin-bottom: 1rem;
+    }
+
+    .lob-label {
+        color: var(--lob-muted);
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 0.35rem;
+        display: block;
+    }
+
+        .lob-label::before {
+            content: "▸ ";
+            color: var(--lob-gold);
+        }
+
+    .lob-input {
+        background-color: #08080a !important;
+        border: 1px solid var(--lob-border) !important;
+        border-radius: 0 !important;
+        color: var(--lob-text) !important;
+        font-family: 'Consolas', 'Courier New', monospace;
+    }
+
+        .lob-input:focus {
+            border-color: var(--lob-gold-bright) !important;
+            box-shadow: 0 0 10px rgba(201, 160, 59, 0.3) !important;
+        }
+
+    .lob-alert-success {
+        background-color: rgba(78, 191, 122, 0.1);
+        border: 1px solid var(--lob-green);
+        border-left: 5px solid var(--lob-green);
+        color: var(--lob-green);
+        padding: 0.75rem 1rem;
+        margin-bottom: 1.25rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-size: 0.85rem;
+    }
+
+    .lob-validation {
+        color: var(--lob-red) !important;
+        font-size: 0.8rem;
+        letter-spacing: 0.5px;
+    }
+
+    .lob-validation-summary ul {
+        background-color: rgba(201, 59, 59, 0.1);
+        border: 1px solid var(--lob-red);
+        border-left: 5px solid var(--lob-red);
+        color: var(--lob-red);
+        padding: 0.75rem 1rem 0.75rem 2rem;
+        margin-bottom: 1.25rem;
+        list-style-type: square;
+    }
+
+    .lob-btn-submit {
+        background-color: #1a160c;
+        border: 2px solid var(--lob-gold);
+        color: var(--lob-gold-bright);
+        border-radius: 0;
+        padding: 0.65rem 1.75rem;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        transition: all 0.15s ease-in-out;
+        width: 100%;
+    }
+
+        .lob-btn-submit:hover {
+            background-color: var(--lob-gold);
+            color: #070709;
+            box-shadow: 0 0 15px rgba(201, 160, 59, 0.5);
+        }
+</style>
+
+<div class="container mt-4 mb-5">
+    <div class="lob-terminal">
+        <div class="lob-hazard-bar"></div>
+
+        <div class="lob-header">
+            <div>
+                <small class="text-uppercase" style="color: var(--lob-muted); letter-spacing: 2px;">
+                    L-CORP // EXTRACTION TEAM ARCHIVE
+                </small>
+                <h2 class="lob-title">Create Portfolio Record</h2>
+            </div>
+            <span class="lob-badge">CLEARANCE: ARBITER</span>
         </div>
 
-        <div class="mb-3">
-            <label asp-for="Course.CourseName"
-                   class="form-label"></label>
+        <div class="p-4">
+            @if (TempData["Success"] != null)
+            {
+                <div class="lob-alert-success">
+                    [SYSTEM LOG]: @TempData["Success"]
+                </div>
+            }
 
-            <input asp-for="Course.CourseName"
-                   class="form-control" />
+            <div asp-validation-summary="All" class="lob-validation-summary"></div>
 
-            <span asp-validation-for="Course.CourseName"
-                  class="text-danger"></span>
+            <form asp-controller="PortfolioView" asp-action="Create" method="post">
+                @Html.AntiForgeryToken()
+
+                <div class="lob-section-header mt-0">
+                    [01] Department &amp; Course Classification
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Course.CourseCode" class="lob-label"></label>
+                    <input asp-for="Course.CourseCode" class="form-control lob-input" placeholder="e.g. CS101" />
+                    <span asp-validation-for="Course.CourseCode" class="lob-validation"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Course.CourseName" class="lob-label"></label>
+                    <input asp-for="Course.CourseName" class="form-control lob-input" placeholder="Enter Department / Course Designation..." />
+                    <span asp-validation-for="Course.CourseName" class="lob-validation"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Course.Description" class="lob-label"></label>
+                    <textarea asp-for="Course.Description" class="form-control lob-input" rows="3" placeholder="Enter managerial guidelines and overview..."></textarea>
+                </div>
+
+                <div class="lob-section-header">
+                    [02] Abnormality / Project Observation Log
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Project.ProjectTitle" class="lob-label"></label>
+                    <input asp-for="Project.ProjectTitle" class="form-control lob-input" placeholder="Enter Subject Designation..." />
+                    <span asp-validation-for="Project.ProjectTitle" class="lob-validation"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Project.ProjectDescription" class="lob-label"></label>
+                    <textarea asp-for="Project.ProjectDescription" class="form-control lob-input" rows="4" placeholder="Record observation findings and behavioral notes..."></textarea>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Project.VideoLink" class="lob-label"></label>
+                    <input asp-for="Project.VideoLink" class="form-control lob-input" placeholder="https://..." />
+                </div>
+
+                <div class="lob-section-header">
+                    [03] Visual Surveillance Capture
+                </div>
+                <div class="mb-3">
+                    <label asp-for="ProjectImage.ImageUrl" class="lob-label"></label>
+                    <input asp-for="ProjectImage.ImageUrl" class="form-control lob-input" placeholder="https://..." />
+                    <span asp-validation-for="ProjectImage.ImageUrl" class="lob-validation"></span>
+                </div>
+                <div class="mb-4">
+                    <label asp-for="ProjectImage.ImageCaption" class="lob-label"></label>
+                    <input asp-for="ProjectImage.ImageCaption" class="form-control lob-input" placeholder="Enter surveillance timestamp or note..." />
+                </div>
+
+                <button type="submit" class="btn lob-btn-submit">
+                    [ COMMIT RECORD TO MAINFRAME ]
+                </button>
+            </form>
         </div>
 
-        <div class="mb-3">
-            <label asp-for="Course.Description"
-                   class="form-label"></label>
-
-            <textarea asp-for="Course.Description"
-                      class="form-control"></textarea>
-        </div>
-
-
-        <h4>Project Information</h4>
-        <hr />
-
-        <div class="mb-3">
-            <label asp-for="Project.ProjectTitle"
-                   class="form-label"></label>
-
-            <input asp-for="Project.ProjectTitle"
-                   class="form-control" />
-
-            <span asp-validation-for="Project.ProjectTitle"
-                  class="text-danger"></span>
-        </div>
-
-        <div class="mb-3">
-            <label asp-for="Project.ProjectDescription"
-                   class="form-label"></label>
-
-            <textarea asp-for="Project.ProjectDescription"
-                      class="form-control"></textarea>
-        </div>
-
-        <div class="mb-3">
-            <label asp-for="Project.VideoLink"
-                   class="form-label"></label>
-
-            <input asp-for="Project.VideoLink"
-                   class="form-control" />
-        </div>
-
-
-        <h4>Project Image Information</h4>
-        <hr />
-
-        <div class="mb-3">
-            <label asp-for="ProjectImage.ImageUrl"
-                   class="form-label"></label>
-
-            <input asp-for="ProjectImage.ImageUrl"
-                   class="form-control" />
-
-            <span asp-validation-for="ProjectImage.ImageUrl"
-                  class="text-danger"></span>
-        </div>
-
-        <div class="mb-3">
-            <label asp-for="ProjectImage.ImageCaption"
-                   class="form-label"></label>
-
-            <input asp-for="ProjectImage.ImageCaption"
-                   class="form-control" />
-        </div>
-
-
-        <button type="submit" class="btn btn-primary">
-            Save Portfolio
-        </button>
-
-    </form>
-
+        <div class="lob-hazard-bar"></div>
+    </div>
 </div>
 
 @section Scripts {

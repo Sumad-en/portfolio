@@ -1,0 +1,164 @@
+﻿@model portfolio.ViewModels.PortfolioViewModel
+@{
+    ViewData["Title"] = "DISCIPLINARY ARCHIVE // SUPPRESSION ORDER";
+}
+
+<style>
+    :root {
+        --lob-bg: #0c0a0a;
+        --lob-panel: #1a1010;
+        --lob-border: #8f1d1d;
+        --lob-red: #ff3b3b;
+        --lob-crimson: #b81d1d;
+        --lob-text: #f0dede;
+        --lob-muted: #b89898;
+    }
+
+    body {
+        background-color: var(--lob-bg);
+        color: var(--lob-text);
+        font-family: 'Consolas', 'Courier New', monospace;
+    }
+
+    .lob-terminal {
+        background-color: var(--lob-panel);
+        border: 2px solid var(--lob-red);
+        box-shadow: 0 0 30px rgba(255, 59, 59, 0.25);
+    }
+
+    .lob-hazard-bar {
+        height: 12px;
+        background: repeating-linear-gradient(-45deg, var(--lob-red), var(--lob-red) 12px, #110b0b 12px, #110b0b 24px);
+        border-bottom: 2px solid var(--lob-red);
+    }
+
+    .lob-header {
+        background-color: #120b0b;
+        border-bottom: 1px solid var(--lob-border);
+        padding: 1.25rem 1.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .lob-title {
+        color: var(--lob-red);
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        margin: 0;
+    }
+
+    .lob-badge {
+        background-color: var(--lob-red);
+        color: #0c0a0a;
+        font-weight: 700;
+        padding: 0.25rem 0.65rem;
+        font-size: 0.75rem;
+        letter-spacing: 1.5px;
+    }
+
+    .lob-warning-box {
+        background-color: rgba(255, 59, 59, 0.12);
+        border: 1px solid var(--lob-red);
+        border-left: 5px solid var(--lob-red);
+        padding: 1rem 1.25rem;
+        margin-bottom: 1.5rem;
+        color: #ffcccc;
+    }
+
+    .lob-summary-card {
+        background-color: #120b0b;
+        border: 1px solid var(--lob-border);
+        padding: 1.25rem;
+        margin-bottom: 1.75rem;
+    }
+
+    .lob-field-label {
+        color: var(--lob-muted);
+        text-transform: uppercase;
+        font-size: 0.85rem;
+    }
+
+    .lob-btn-suppress {
+        background-color: var(--lob-crimson);
+        border: 2px solid var(--lob-red);
+        color: #ffffff;
+        border-radius: 0;
+        padding: 0.7rem 1.75rem;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        transition: 0.15s;
+    }
+
+        .lob-btn-suppress:hover {
+            background-color: var(--lob-red);
+            color: #0c0a0a;
+            box-shadow: 0 0 18px rgba(255, 59, 59, 0.6);
+        }
+
+    .lob-btn-abort {
+        background-color: transparent;
+        border: 2px solid var(--lob-muted);
+        color: var(--lob-muted);
+        border-radius: 0;
+        padding: 0.7rem 1.5rem;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        text-decoration: none;
+        transition: 0.15s;
+    }
+
+        .lob-btn-abort:hover {
+            border-color: #ffffff;
+            color: #ffffff;
+        }
+</style>
+
+<div class="container mt-4 mb-5">
+    <div class="lob-terminal">
+        <div class="lob-hazard-bar"></div>
+
+        <div class="lob-header">
+            <div>
+                <small class="text-uppercase" style="color: var(--lob-muted); letter-spacing: 2px;">
+                    DISCIPLINARY TEAM // PERMANENT PURGE PROTOCOL
+                </small>
+                <h2 class="lob-title">Confirm Record Suppression</h2>
+            </div>
+            <span class="lob-badge">WARNING: IRREVERSIBLE</span>
+        </div>
+
+        <div class="p-4">
+            <div class="lob-warning-box">
+                <strong>[ALERT]:</strong> You are about to permanently purge the following Course, Project, and Surveillance Image from the mainframe database. This action cannot be undone.
+            </div>
+
+            <div class="lob-summary-card">
+                <p class="mb-2"><span class="lob-field-label">▸ Subject Code:</span> <strong class="text-white">@Model.Course.CourseCode</strong></p>
+                <p class="mb-2"><span class="lob-field-label">▸ Department / Course:</span> <strong class="text-white">@Model.Course.CourseName</strong></p>
+                <p class="mb-2"><span class="lob-field-label">▸ Project Title:</span> <strong class="text-white">@Model.Project.ProjectTitle</strong></p>
+                <p class="mb-0"><span class="lob-field-label">▸ Description:</span> <span>@Model.Project.ProjectDescription</span></p>
+            </div>
+
+            <form asp-controller="PortfolioView" asp-action="Delete" asp-route-id="@Model.Course.CourseId" method="post">
+                @Html.AntiForgeryToken()
+
+                <div class="d-flex gap-3 flex-wrap">
+                    <button type="submit" class="btn lob-btn-suppress flex-grow-1">
+                        <i class="bi bi-exclamation-octagon-fill"></i> [ EXECUTE SUPPRESSION ]
+                    </button>
+                    <a asp-controller="PortfolioView" asp-action="Index" class="lob-btn-abort">
+                        ABORT PROTOCOL
+                    </a>
+                </div>
+            </form>
+        </div>
+
+        <div class="lob-hazard-bar"></div>
+    </div>
+</div>

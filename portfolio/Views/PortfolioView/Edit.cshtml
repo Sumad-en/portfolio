@@ -1,0 +1,221 @@
+﻿@model portfolio.ViewModels.PortfolioViewModel
+@{
+    ViewData["Title"] = "DISCIPLINARY ARCHIVE // MODIFY RECORD";
+}
+
+<style>
+    :root {
+        --lob-bg: #0c0a0a;
+        --lob-panel: #1a1010;
+        --lob-border: #6e1b1b;
+        --lob-red: #ff3b3b;
+        --lob-crimson: #b81d1d;
+        --lob-text: #f0dede;
+        --lob-muted: #b89898;
+    }
+
+    body {
+        background-color: var(--lob-bg);
+        color: var(--lob-text);
+        font-family: 'Consolas', 'Courier New', monospace;
+    }
+
+    .lob-terminal {
+        background-color: var(--lob-panel);
+        border: 2px solid var(--lob-border);
+        box-shadow: 0 0 25px rgba(255, 59, 59, 0.15);
+    }
+
+    .lob-hazard-bar {
+        height: 10px;
+        background: repeating-linear-gradient(-45deg, var(--lob-red), var(--lob-red) 12px, #110b0b 12px, #110b0b 24px);
+        border-bottom: 2px solid var(--lob-red);
+    }
+
+    .lob-header {
+        background-color: #120b0b;
+        border-bottom: 1px solid var(--lob-border);
+        padding: 1.25rem 1.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .lob-title {
+        color: var(--lob-red);
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        margin: 0;
+    }
+
+    .lob-badge {
+        border: 1px solid var(--lob-red);
+        color: var(--lob-red);
+        padding: 0.2rem 0.6rem;
+        font-size: 0.75rem;
+        letter-spacing: 1.5px;
+    }
+
+    .lob-section-header {
+        background-color: #261414;
+        border-left: 4px solid var(--lob-red);
+        color: var(--lob-red);
+        padding: 0.45rem 0.85rem;
+        font-size: 0.95rem;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        margin-top: 1.75rem;
+        margin-bottom: 1rem;
+    }
+
+    .lob-label {
+        color: var(--lob-muted);
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 0.35rem;
+        display: block;
+    }
+
+        .lob-label::before {
+            content: "▸ ";
+            color: var(--lob-red);
+        }
+
+    .lob-input {
+        background-color: #0f0909 !important;
+        border: 1px solid var(--lob-border) !important;
+        border-radius: 0 !important;
+        color: var(--lob-text) !important;
+        font-family: 'Consolas', 'Courier New', monospace;
+    }
+
+        .lob-input:focus {
+            border-color: var(--lob-red) !important;
+            box-shadow: 0 0 8px rgba(255, 59, 59, 0.35) !important;
+        }
+
+    .lob-btn-submit {
+        background-color: var(--lob-crimson);
+        border: 2px solid var(--lob-red);
+        color: #ffffff;
+        border-radius: 0;
+        padding: 0.65rem 1.75rem;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        transition: 0.15s;
+    }
+
+        .lob-btn-submit:hover {
+            background-color: var(--lob-red);
+            color: #0c0a0a;
+            box-shadow: 0 0 15px rgba(255, 59, 59, 0.5);
+        }
+
+    .lob-btn-cancel {
+        background-color: transparent;
+        border: 2px solid var(--lob-muted);
+        color: var(--lob-muted);
+        border-radius: 0;
+        padding: 0.65rem 1.5rem;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        text-decoration: none;
+        transition: 0.15s;
+    }
+
+        .lob-btn-cancel:hover {
+            border-color: #ffffff;
+            color: #ffffff;
+        }
+</style>
+
+<div class="container mt-4 mb-5">
+    <div class="lob-terminal">
+        <div class="lob-hazard-bar"></div>
+
+        <div class="lob-header">
+            <div>
+                <small class="text-uppercase" style="color: var(--lob-muted); letter-spacing: 2px;">
+                    DISCIPLINARY TEAM // RECORD OVERRIDE
+                </small>
+                <h2 class="lob-title">Modify Portfolio Record</h2>
+            </div>
+            <span class="lob-badge">MODE: OVERWRITE</span>
+        </div>
+
+        <div class="p-4">
+            <div asp-validation-summary="All" class="text-danger mb-3"></div>
+
+            <form asp-controller="PortfolioView" asp-action="Edit" asp-route-id="@Model.Course.CourseId" method="post">
+                @Html.AntiForgeryToken()
+
+                <input type="hidden" asp-for="Course.CourseId" />
+                <input type="hidden" asp-for="Project.ProjectId" />
+                <input type="hidden" asp-for="Project.CourseId" />
+                <input type="hidden" asp-for="ProjectImage.ImageId" />
+                <input type="hidden" asp-for="ProjectImage.ProjectId" />
+
+                <div class="lob-section-header mt-0">Department &amp; Course Classification</div>
+                <div class="mb-3">
+                    <label asp-for="Course.CourseCode" class="lob-label"></label>
+                    <input asp-for="Course.CourseCode" class="form-control lob-input" />
+                    <span asp-validation-for="Course.CourseCode" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Course.CourseName" class="lob-label"></label>
+                    <input asp-for="Course.CourseName" class="form-control lob-input" />
+                    <span asp-validation-for="Course.CourseName" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Course.Description" class="lob-label"></label>
+                    <textarea asp-for="Course.Description" class="form-control lob-input" rows="3"></textarea>
+                </div>
+
+                <div class="lob-section-header">Abnormality / Project Observation Log</div>
+                <div class="mb-3">
+                    <label asp-for="Project.ProjectTitle" class="lob-label"></label>
+                    <input asp-for="Project.ProjectTitle" class="form-control lob-input" />
+                    <span asp-validation-for="Project.ProjectTitle" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Project.ProjectDescription" class="lob-label"></label>
+                    <textarea asp-for="Project.ProjectDescription" class="form-control lob-input" rows="4"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Project.VideoLink" class="lob-label"></label>
+                    <input asp-for="Project.VideoLink" class="form-control lob-input" />
+                </div>
+
+                <div class="lob-section-header">Visual Surveillance Capture</div>
+                <div class="mb-3">
+                    <label asp-for="ProjectImage.ImageUrl" class="lob-label"></label>
+                    <input asp-for="ProjectImage.ImageUrl" class="form-control lob-input" />
+                    <span asp-validation-for="ProjectImage.ImageUrl" class="text-danger"></span>
+                </div>
+                <div class="mb-4">
+                    <label asp-for="ProjectImage.ImageCaption" class="lob-label"></label>
+                    <input asp-for="ProjectImage.ImageCaption" class="form-control lob-input" />
+                </div>
+
+                <div class="d-flex gap-3">
+                    <button type="submit" class="btn lob-btn-submit flex-grow-1">
+                        [ OVERWRITE MAINFRAME RECORD ]
+                    </button>
+                    <a asp-controller="PortfolioView" asp-action="Index" class="lob-btn-cancel">
+                        ABORT
+                    </a>
+                </div>
+            </form>
+        </div>
+
+        <div class="lob-hazard-bar"></div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
