@@ -96,6 +96,25 @@
             box-shadow: 0 0 8px rgba(255, 59, 59, 0.35) !important;
         }
 
+    .lob-surveillance-preview {
+        display: inline-block;
+        border: 2px solid var(--lob-border);
+        background-color: #0f0909;
+        padding: 6px;
+        margin-bottom: 0.75rem;
+    }
+
+    .lob-surveillance-tag {
+        display: block;
+        background-color: #120b0b;
+        color: var(--lob-red);
+        font-size: 0.7rem;
+        letter-spacing: 1.5px;
+        padding: 2px 6px;
+        margin-bottom: 5px;
+        border-bottom: 1px solid var(--lob-border);
+    }
+
     .lob-btn-submit {
         background-color: var(--lob-crimson);
         border: 2px solid var(--lob-red);
@@ -150,7 +169,7 @@
         <div class="p-4">
             <div asp-validation-summary="All" class="text-danger mb-3"></div>
 
-            <form asp-controller="PortfolioView" asp-action="Edit" asp-route-id="@Model.Course.CourseId" method="post">
+            <form asp-controller="PortfolioView" asp-action="Edit" asp-route-id="@Model.Course.CourseId" method="post" enctype="multipart/form-data">
                 @Html.AntiForgeryToken()
 
                 <input type="hidden" asp-for="Course.CourseId" />
@@ -191,10 +210,19 @@
                 </div>
 
                 <div class="lob-section-header">Visual Surveillance Capture</div>
+
+                <div class="lob-surveillance-preview">
+                    <span class="lob-surveillance-tag">● CURRENT ARCHIVED FEED</span>
+                    <img src="@Url.Action("GetImage", "PortfolioView", new { id = Model.ProjectImage.ImageId })"
+                         alt="@Model.ProjectImage.ImageCaption"
+                         style="max-width: 280px; max-height: 180px; object-fit: cover; display: block;"
+                         onerror="this.parentElement.style.display='none';" />
+                </div>
+
                 <div class="mb-3">
-                    <label asp-for="ProjectImage.ImageUrl" class="lob-label"></label>
-                    <input asp-for="ProjectImage.ImageUrl" class="form-control lob-input" />
-                    <span asp-validation-for="ProjectImage.ImageUrl" class="text-danger"></span>
+                    <label asp-for="ImageFile" class="lob-label">Replace Surveillance Image (Optional)</label>
+                    <input asp-for="ImageFile" type="file" accept="image/*" class="form-control lob-input" />
+                    <span asp-validation-for="ImageFile" class="text-danger"></span>
                 </div>
                 <div class="mb-4">
                     <label asp-for="ProjectImage.ImageCaption" class="lob-label"></label>

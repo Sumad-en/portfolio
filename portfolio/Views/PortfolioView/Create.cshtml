@@ -173,7 +173,7 @@
 
             <div asp-validation-summary="All" class="lob-validation-summary"></div>
 
-            <form asp-controller="PortfolioView" asp-action="Create" method="post">
+            <form asp-controller="PortfolioView" asp-action="Create" method="post" enctype="multipart/form-data">
                 @Html.AntiForgeryToken()
 
                 <div class="lob-section-header mt-0">
@@ -215,9 +215,9 @@
                     [03] Visual Surveillance Capture
                 </div>
                 <div class="mb-3">
-                    <label asp-for="ProjectImage.ImageUrl" class="lob-label"></label>
-                    <input asp-for="ProjectImage.ImageUrl" class="form-control lob-input" placeholder="https://..." />
-                    <span asp-validation-for="ProjectImage.ImageUrl" class="lob-validation"></span>
+                    <label asp-for="ImageFile" class="lob-label">Upload Surveillance Image File</label>
+                    <input asp-for="ImageFile" type="file" accept="image/*" class="form-control lob-input" />
+                    <span asp-validation-for="ImageFile" class="lob-validation"></span>
                 </div>
                 <div class="mb-4">
                     <label asp-for="ProjectImage.ImageCaption" class="lob-label"></label>

@@ -132,6 +132,30 @@ namespace portfolio.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+        // Helper to convert uploaded file into byte[]
+        private static async Task ProcessUploadedImageAsync(PortfolioViewModel model)
+        {
+            if (model.ImageFile != null && model.ImageFile.Length > 0)
+            {
+                using var ms = new MemoryStream();
+                await model.ImageFile.CopyToAsync(ms);
+                model.ProjectImage.ImageData = ms.ToArray();
+                model.ProjectImage.ContentType = model.ImageFile.ContentType;
+            }
+        }
+
+        // Endpoint that streams the PostgreSQL bytea image to <img> tags
+        [HttpGet]
+        public async Task<IActionResult> GetImage(int id)
+        {
+            var image = await _portfolio.GetImageByIdAsync(id);
+            if (image == null)
+            {
+                return NotFound();
+            }
+
+            return File(image.Value.Data, image.Value.ContentType);
+        }
 
 
 

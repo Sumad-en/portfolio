@@ -120,16 +120,18 @@ namespace portfolio.Data
             return null;
         }
 
-        // 3. GET RAW IMAGE BYTES FOR <img src="...">
+        // ==========================================
+        // GET RAW IMAGE BYTES FOR <img src="...">
+        // ==========================================
         public async Task<(byte[] Data, string ContentType)?> GetImageByIdAsync(int imageId)
         {
             await using var con = new NpgsqlConnection(_connectionString);
             await con.OpenAsync();
 
             string sql = @"
-                SELECT image_data, content_type
-                FROM portfolio.project_image
-                WHERE image_id = @imageId AND image_data IS NOT NULL";
+        SELECT image_data, content_type
+        FROM portfolio.project_image
+        WHERE image_id = @imageId AND image_data IS NOT NULL";
 
             await using var cmd = new NpgsqlCommand(sql, con);
             cmd.Parameters.AddWithValue("@imageId", imageId);
@@ -144,6 +146,7 @@ namespace portfolio.Data
 
             return null;
         }
+
 
         // 4. ADD PORTFOLIO (WITH BYTEA IMAGE STORAGE)
         public async Task AddPortfolioAsync(PortfolioViewModel model)
@@ -182,9 +185,9 @@ namespace portfolio.Data
                     cmd.Parameters.AddWithValue("@video", (object?)model.Project.VideoLink ?? DBNull.Value);
                     projectId = Convert.ToInt32(await cmd.ExecuteScalarAsync());
                 }
-
                 string imageSql = @"
-                    INSERT INTO portfolio.project_image (project_id, image_url, image_caption, image_data, content_type)
+                    INSERT INTO portfolio.project_image
+                    (project_id, image_url, image_caption, image_data, content_type)
                     VALUES (@project, @url, @caption, @data, @contentType)";
 
                 await using (var cmd = new NpgsqlCommand(imageSql, con, transaction))
@@ -196,6 +199,7 @@ namespace portfolio.Data
                     cmd.Parameters.AddWithValue("@contentType", (object?)model.ProjectImage.ContentType ?? DBNull.Value);
                     await cmd.ExecuteNonQueryAsync();
                 }
+
 
                 await transaction.CommitAsync();
             }
@@ -245,11 +249,11 @@ namespace portfolio.Data
 
                 string imageSql = model.ProjectImage.ImageData != null
                     ? @"UPDATE portfolio.project_image
-                        SET image_caption = @caption, image_data = @data, content_type = @contentType
-                        WHERE image_id = @imageId"
-                    : @"UPDATE portfolio.project_image
-                        SET image_caption = @caption
-                        WHERE image_id = @imageId";
+                     SET image_caption = @caption, image_data = @data, content_type = @contentType
+                     WHERE image_id = @imageId"
+                    :@"UPDATE portfolio.project_image
+                     SET image_caption = @caption
+                     WHERE image_id = @imageId";
 
                 await using (var cmd = new NpgsqlCommand(imageSql, con, transaction))
                 {
@@ -264,6 +268,7 @@ namespace portfolio.Data
 
                     await cmd.ExecuteNonQueryAsync();
                 }
+
 
                 await transaction.CommitAsync();
             }
