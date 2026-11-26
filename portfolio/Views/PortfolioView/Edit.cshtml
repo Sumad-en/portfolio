@@ -1,8 +1,4 @@
-﻿[Authorize]
-[HttpGet]
-public IActionResult Create() { ... }
-
-@model portfolio.ViewModels.PortfolioViewModel
+﻿@model portfolio.ViewModels.PortfolioViewModel
 @{
     ViewData["Title"] = "DISCIPLINARY ARCHIVE // MODIFY RECORD";
 }
@@ -215,18 +211,25 @@ public IActionResult Create() { ... }
 
                 <div class="lob-section-header">Visual Surveillance Capture</div>
 
-                <div class="lob-surveillance-preview">
-                    <span class="lob-surveillance-tag">● CURRENT ARCHIVED FEED</span>
-                    <img src="@Url.Action("GetImage", "PortfolioView", new { id = Model.ProjectImage.ImageId })"
-                         alt="@Model.ProjectImage.ImageCaption"
-                         style="max-width: 280px; max-height: 180px; object-fit: cover; display: block;"
-                         onerror="this.parentElement.style.display='none';" />
-                </div>
+                @if (!string.IsNullOrEmpty(Model.ProjectImage.ImageUrl))
+                {
+                    <div class="lob-surveillance-preview">
+                        <span class="lob-surveillance-tag">● CURRENT ARCHIVED FEED</span>
+                        <img src="@Model.ProjectImage.ImageUrl"
+                             alt="@Model.ProjectImage.ImageCaption"
+                             style="max-width: 280px; max-height: 180px; object-fit: cover; display: block;" />
+                    </div>
+                }
 
                 <div class="mb-3">
-                    <label asp-for="ImageFile" class="lob-label">Replace Surveillance Image (Optional)</label>
+                    <label asp-for="ImageFile" class="lob-label">Option A: Replace With New Image File (Optional)</label>
                     <input asp-for="ImageFile" type="file" accept="image/*" class="form-control lob-input" />
                     <span asp-validation-for="ImageFile" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="ProjectImage.ImageUrl" class="lob-label">Option B: Current / External Image URL</label>
+                    <input asp-for="ProjectImage.ImageUrl" class="form-control lob-input" placeholder="https://..." />
+                    <span asp-validation-for="ProjectImage.ImageUrl" class="text-danger"></span>
                 </div>
                 <div class="mb-4">
                     <label asp-for="ProjectImage.ImageCaption" class="lob-label"></label>

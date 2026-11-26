@@ -8,21 +8,12 @@ namespace portfolio.Controllers
     public class PortfolioViewController : Controller
     {
         private readonly PortfolioRepository _portfolio;
+        private readonly SupabaseStorageService _storage;
 
-        public PortfolioViewController(PortfolioRepository portfolio)
+        public PortfolioViewController(PortfolioRepository portfolio, SupabaseStorageService storage)
         {
             _portfolio = portfolio;
-        }
-
-        private static async Task ProcessUploadedImageAsync(PortfolioViewModel model)
-        {
-            if (model.ImageFile != null && model.ImageFile.Length > 0)
-            {
-                using var ms = new MemoryStream();
-                await model.ImageFile.CopyToAsync(ms);
-                model.ProjectImage.ImageData = ms.ToArray();
-                model.ProjectImage.ContentType = model.ImageFile.ContentType;
-            }
+            _storage = storage;
         }
 
         // PUBLIC: Anyone can view the portfolio
@@ -33,7 +24,7 @@ namespace portfolio.Controllers
             return View(portfolios);
         }
 
-        // PUBLIC: Streams stored images for the public portfolio
+        // PUBLIC: Fallback endpoint if any older bytea images exist in PostgreSQL
         [HttpGet]
         public async Task<IActionResult> GetImage(int id)
         {
@@ -73,14 +64,18 @@ namespace portfolio.Controllers
 
             try
             {
-                await ProcessUploadedImageAsync(model);
+                if (model.ImageFile != null && model.ImageFile.Length > 0)
+                {
+                    model.ProjectImage.ImageUrl = await _storage.UploadImageAsync(model.ImageFile);
+                }
+
                 await _portfolio.AddPortfolioAsync(model);
                 TempData["Success"] = "Portfolio created successfully!";
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
             {
-                ModelState.AddModelError("", $"[DB ERROR]: {ex.Message}");
+                ModelState.AddModelError("", $"[ERROR]: {ex.Message}");
                 return View(model);
             }
         }
@@ -115,14 +110,19 @@ namespace portfolio.Controllers
 
             try
             {
-                await ProcessUploadedImageAsync(model);
+                if (model.ImageFile != null && model.ImageFile.Length > 0)
+                {
+                    await _storage.DeleteImageAsync(model.ProjectImage.ImageUrl);
+                    model.ProjectImage.ImageUrl = await _storage.UploadImageAsync(model.ImageFile);
+                }
+
                 await _portfolio.UpdatePortfolioAsync(model);
                 TempData["Success"] = "Archive record updated successfully!";
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
             {
-                ModelState.AddModelError("", $"[DB ERROR]: {ex.Message}");
+                ModelState.AddModelError("", $"[ERROR]: {ex.Message}");
                 return View(model);
             }
         }
@@ -147,7 +147,13 @@ namespace portfolio.Controllers
         {
             try
             {
-                await _portfolio.DeletePortfolioAsync(id);
+                var portfolio = await _portfolio.GetPortfolioByCourseIdAsync(id);
+                if (portfolio != null)
+                {
+                    await _storage.DeleteImageAsync(portfolio.ProjectImage?.ImageUrl);
+                    await _portfolio.DeletePortfolioAsync(id);
+                }
+
                 TempData["Success"] = "Record suppressed and purged from mainframe.";
             }
             catch (Exception)

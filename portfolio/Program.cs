@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
+builder.Services.AddHttpClient<portfolio.Data.SupabaseStorageService>();
 
 // Register Portfolio Repository
 builder.Services.AddScoped<portfolio.Data.PortfolioRepository>();
